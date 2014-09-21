@@ -5,10 +5,8 @@
   (interactive "stweet: ")
   
   (shell-command
-   (concat "ruby " tfm-directory "tweet.rb " status " &"))
-
-  ; 
-  (delete-other-windows)
+   (concat "ruby " tfm-directory "tweet.rb " status " &")
+   "Tweet Result")
   )
 
 (provide 'tweet-from-minibuffer)
