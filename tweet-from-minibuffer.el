@@ -5,8 +5,7 @@
   (interactive "stweet: ")
   
   (shell-command
-   (concat "ruby " tfm-directory "tweet.rb " status " &")
-   "Tweet Result")
+   (concat "ruby " tfm-directory "tweet.rb " status " &"))
   )
 
 (provide 'tweet-from-minibuffer)
