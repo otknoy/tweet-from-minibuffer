@@ -2,21 +2,23 @@
 require 'oauth'
 
 class TwitterClient
-  @@CONSUMER_KEY = 'xxxx'
-  @@CONSUMER_SECRET = 'xxxx'
-  @@ACCESS_TOKEN = 'xxxx'
-  @@ACCESS_TOKEN_SECRET = 'xxxx'
-  
   @@URI = 'https://api.twitter.com/1.1/statuses/update.json'
 
-  def self.update status
-    consumer = OAuth::Consumer.new(@@CONSUMER_KEY,
-                                   @@CONSUMER_SECRET,
+  def initialize(consumer_key, consumer_secret, access_token, access_token_secret)
+    @consumer_key        = consumer_key
+    @consumer_secret     = consumer_secret
+    @access_token        = access_token
+    @access_token_secret = access_token_secret
+  end
+
+  def update status
+    consumer = OAuth::Consumer.new(@consumer_key,
+                                   @consumer_secret,
                                    :site => 'http://twitter.com')
     
     access_token = OAuth::AccessToken.new(consumer,
-                                          @@ACCESS_TOKEN,
-                                          @@ACCESS_TOKEN_SECRET)
+                                          @access_token,
+                                          @access_token_secret)
 
     request_api_uri = @@URI + '?status=' + URI.escape(status)
 
@@ -28,7 +30,14 @@ class TwitterClient
 end
 
 if __FILE__ == $0
-  status = ARGV.join(' ')
+  consumer_key        = ''
+  consumer_secret     = ''
+  access_token        = ''
+  access_token_secret = ''
 
-  TwitterClient.update status
+  client = TwitterClient.new(consumer_key, consumer_secret,
+                             access_token, access_token_secret)
+
+  status = ARGV.join(' ')
+  client.update(status)
 end
